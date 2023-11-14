@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  vms:
+    container_name: vms
+    build:
+      context: ./services/vms
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./services/vms/:/app
+    depends_on:
+      - database
+    links:
+      - database
+
+  database:
+      container_name: db
+      build:
+        context: ./services/database
+        dockerfile: Dockerfile
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_USER=thabish
+        - POSTGRES_PASSWORD=dexter3000
